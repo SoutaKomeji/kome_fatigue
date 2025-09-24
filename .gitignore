@@ -1,0 +1,12 @@
+# OSRMビルド成果物（例）
+elevation_sample/*.osrm.*
+elevation_sample/*.pbf
+
+# 特定のファイルも無視
+elevation_sample/hokkaido-latest.osrm.fileIndex
+
+# pythonの__pycache__なども除外（必要なら）
+__pycache__/
+*.pyc
+
+tool/
