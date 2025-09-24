@@ -61,6 +61,7 @@ stepData = []
 watchData = []
 coordsData = []
 heightData = []
+metsFatigueData = []
 
 # pandasでread_excel
 df = pd.read_excel('preExpData_fatigue.xlsx')
@@ -72,6 +73,7 @@ stepSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポット間
 watchTimeSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポットでの観光時間')
 coordsSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='座標取得')
 heightSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='高さの取得')
+metsFatigueSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='METsを用いた移動による疲労')
 
 for i in range(SPOT_NUM + 1):
     spotName.append(featureSheet.iloc[i+25,0])
@@ -81,6 +83,7 @@ for i in range(SPOT_NUM + 1):
     watchData.append(watchTimeSheet.iloc[i+25,4:5].values)
     coordsData.append(coordsSheet.iloc[i,1:3].values)
     heightData.append(heightSheet.iloc[i,1:2].values)
+    metsFatigueData.append(metsFatigueSheet.iloc[i,1:SPOT_NUM + 2].values)
 ## 観光スポットのデータ作成終了
 
 # 自然とmental_fatigue
