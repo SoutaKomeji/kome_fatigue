@@ -17,7 +17,7 @@ from deap.benchmarks.tools import igd
 from deap import creator
 from deap import tools
 
-from move_fatigue_calculater import get_routeCoord, get_distance_and_angles, calculate_METs # metsを用いた疲労度計算があるファイルをimport
+# from move_fatigue_calculater import get_routeCoord, get_distance_and_angles, calculate_METs # metsを用いた疲労度計算があるファイルをimport
 
 start_time = time.time()
 # Problem definition
