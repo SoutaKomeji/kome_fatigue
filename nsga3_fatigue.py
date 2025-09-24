@@ -547,19 +547,19 @@ for gen in range(NGEN):
             child1, child2 = toolbox.mate(toolbox.clone(parents[num[0]]),toolbox.clone(parents[num[1]]),gen)
 
             if(debug.mate_check): # False
-                if child1 != [[0],0,0] and child2 != [[0],0,0]:
+                if child1 != [[0],0,0,0,0] and child2 != [[0],0,0,0,0]:
                     print("親個体A：",num[0],parents[num[0]],"親個体B：",num[1],parents[num[1]],"交叉により生まれたchild1：", child1)
                     print("親個体A：",num[0],parents[num[0]],"親個体B：",num[1],parents[num[1]],"交叉により生まれたchild2：", child2)
-                elif child1 != [[0],0,0]:
+                elif child1 != [[0],0,0,0,0]:
                     print("親個体A：",num[0],parents[num[0]],"親個体B：",num[1],parents[num[1]],"交叉により生まれたchild1：", child1)
-                elif child2 != [[0],0,0]:
+                elif child2 != [[0],0,0,0,0]:
                     print("親個体A：",num[0],parents[num[0]],"親個体B：",num[1],parents[num[1]],"交叉により生まれたchild2：", child2)
                 else:
                     bad_mate_count += 1
 
             if child1 != [[0],0,0,0,0]:
                 offsprings.append(child1)
-            if child2 != [[0],0,0]:
+            if child2 != [[0],0,0,0,0]:
                 offsprings.append(child2)
             # offsprings.append(child1)
             # offsprings.append(child2)
