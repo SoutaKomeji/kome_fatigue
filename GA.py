@@ -170,7 +170,8 @@ def mate(inds1, inds2, gen):
 
     # 重複があった場合に，ランダムに削除する(course1用)
     t = [x for x in set(ind1Front + ind2Behind) if (ind1Front + ind2Behind).count(x) > 1]
-    t.remove(SPOT_NUM)
+    if SPOT_NUM in t:
+        t.remove(SPOT_NUM)
     for i in t:
         loot = random.randint(0,1)
 
@@ -181,7 +182,8 @@ def mate(inds1, inds2, gen):
     
     # 重複があった場合に，ランダムに削除する(course2用)
     t = [x for x in set(ind2Front + ind1Behind) if (ind2Front + ind1Behind).count(x) > 1]
-    t.remove(SPOT_NUM)
+    if SPOT_NUM in t:
+        t.remove(SPOT_NUM)
     # if(t):
     for i in t:
         loot = random.randint(0,1)
@@ -262,10 +264,13 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
         # 削除した中から追加するスポットを選択
         t = set(ind[0])^set(range(SPOT_NUM))
         print("t:",t)
-        t.remove(SPOT_NUM)
+        t.discard(SPOT_NUM)
         addSpot = random.choice(list(t))
         # 観光スポットを追加する場所を選択
-        addPoint = random.randint(1,len(ind[0]) - 1)
+        if len(ind[0]) > 1:
+            addPoint = random.randint(1,len(ind[0]) - 1)
+        else:
+            addPoint = 1
         ind[0].insert(addPoint,addSpot)
         # print("増加変異")
 
