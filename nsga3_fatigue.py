@@ -67,7 +67,7 @@ MUTPB = 10 # ％表記でお願いします
 # ここでリファレンスポイントを作成している（NOBJ:目的関数の数，P:リファレンスポイントの次元）
 ref_points = tools.uniform_reference_points(NOBJ, P)
 
-# reference points の表示
+# # reference points の表示
 # for i in range(len(ref_points)):
 #     print("ref_points[",i,"]:",ref_points[i])
 
@@ -420,19 +420,19 @@ def best_individuals_show_for_each_reference_point(individuals):
     #     else:
     #         print("最良個体なし")
 
-    for i in [6,7,8,1]:
+    for i in [8,6,12,10]:
         # 最短距離に対応する個体の番号を取得する
         associations_number = -1
         lowest_associations_value = 10.0
         print("--------------------------------------------------------------------------")
-        if i == 1:
-            print("疲労2つ")
+        if i == 8:
+            print("歴史観光スポット身体")
         elif i == 6:
-            print("自然精神")
-        elif i == 7:
-            print("自然身体")
-        elif i == 8:
-            print("自然歴史")
+            print("歴史移動身体")
+        elif i == 12:
+            print("自然観光スポット身体")
+        elif i == 10:
+            print("自然移動身体")
         print("reference point", ref_data_to_show[i])
         
         # この下がゼロのとき「最良個体なし」となる
@@ -532,6 +532,7 @@ for gen in range(NGEN):
         #
         # 交叉で制限時間に対して大幅に違うものができた場合の数を保存
         bad_mate_count = 0
+        zero_count = 0
 
         # print("mate : Start")
 
@@ -559,11 +560,13 @@ for gen in range(NGEN):
 
             if child1 != [[0],0,0,0,0]:
                 offsprings.append(child1)
+                zero_count += 1
             if child2 != [[0],0,0,0,0]:
                 offsprings.append(child2)
-            # offsprings.append(child1)
+                zero_count += 1
             # offsprings.append(child2)
         # print("mate : End")
+        print("zero_count:", zero_count)
         if(debug.mate_check): # False
             print("bad_mate_count: ",bad_mate_count)
 
