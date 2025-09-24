@@ -260,8 +260,9 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
     if(loot == 0):
         # 既にコース内に含まれている観光スポットを削除し，
         # 削除した中から追加するスポットを選択
+        # print(ind[0])
         t = set(ind[0])^set(range(SPOT_NUM))
-        print("t:",t)
+        # print("t:",t)
         t.remove(SPOT_NUM)
         addSpot = random.choice(list(t))
         # 観光スポットを追加する場所を選択

@@ -477,6 +477,7 @@ toolbox.register("select",tools.selNSGA3, ref_points=ref_points)
 
 # ここで一番最初の親観光ルート群を作る
 parents = toolbox.population(n=MU) #初期観光ルート群 [[[出発地点, 観光地1, 観光地2, ..., 観光地n, 終着地点], トータルの観光時間, トータルの移動時間, 0],...
+# print(parents)
 count = 0
 
 # 評価を行う
@@ -556,7 +557,7 @@ for gen in range(NGEN):
                 else:
                     bad_mate_count += 1
 
-            if child1 != [[0],0,0]:
+            if child1 != [[0],0,0,0,0]:
                 offsprings.append(child1)
             if child2 != [[0],0,0]:
                 offsprings.append(child2)
@@ -574,9 +575,10 @@ for gen in range(NGEN):
         for i in random.sample(range(len(parents)),MU * MUTPB // 100):
             # 複製した個体を変異させる
             c = copy.deepcopy(parents[i])
+            # print(c)
             mutant = toolbox.mutate(c,gen)
             if(debug.mutate_check): # False
-                if mutant != [[0],0,0,0]:
+                if mutant != [[0],0,0,0,0]:
                     print("突然変異する親個体A：",i,parents[i])
                     print("突然変異した個体：", mutant)
                 else:
