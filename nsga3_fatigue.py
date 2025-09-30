@@ -420,7 +420,7 @@ def best_individuals_show_for_each_reference_point(individuals):
     #     else:
     #         print("最良個体なし")
 
-    for i in [8,6,12,10]:
+    for i in [6,8,10,12]:  
         # 最短距離に対応する個体の番号を取得する
         associations_number = -1
         lowest_associations_value = 10.0
@@ -429,6 +429,7 @@ def best_individuals_show_for_each_reference_point(individuals):
             print("歴史観光スポット身体")
         elif i == 6:
             print("歴史移動身体")
+        
         elif i == 12:
             print("自然観光スポット身体")
         elif i == 10:
