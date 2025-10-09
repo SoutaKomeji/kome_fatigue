@@ -215,7 +215,18 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
         start_idx = spot_sequence[i]
         end_idx = spot_sequence[i+1]
         mets_fatigue += metsFatigueData[start_idx][end_idx]
-    
+        
+        # 休憩できる観光スポットを訪れた場合に，休憩時間に応じて直前の移動による疲労を軽減する
+        # 詳細はimportant_information.txtの32行目以下を参照
+
+        # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
+        if spotData[i+1][6] < 0:
+            # 制限時間によって直前の疲労を軽減する割合を変える
+            if spotData[i+1][8] <= 15:
+                return 0
+
+
+        # print(spot_sequence[i+1], spotData[i+1][6])
 
     # 移動時間に関する制約(最小化)
     # important_information.txtの滞在時間参照
