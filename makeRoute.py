@@ -20,8 +20,6 @@ from deap import tools
 # from move_fatigue_calculater import get_routeCoord, get_distance_and_angles, calculate_METs # metsを用いた疲労度計算があるファイルをimport
 
 start_time = time.time()
-# Problem definition
-# PROBLEM = "dtlz2"
 
 #目的関数の数の設定
 # NOBJ = 9 #歩数あり
@@ -154,7 +152,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
     indに入っているもの
     ind[0]:訪れる観光スポットの番号のリスト
     ind[1]:トータルの時間
-    ind[2]:移動飲みの時間
+    ind[2]:移動のみの時間
     ind[3]:metsを用いた移動による身体的疲労
     '''
 
@@ -175,7 +173,6 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
 
     totaltime = 0
     walktime = 0
-    subtime_score = 0
     walk_score = 0
 
     spare_minute = 0 # 理想時間よりも短い時間で回れた場合の分数
@@ -218,26 +215,6 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
         start_idx = spot_sequence[i]
         end_idx = spot_sequence[i+1]
         mets_fatigue += metsFatigueData[start_idx][end_idx]
-
-    # for i in range(len(spot_sequence) - 1):
-    #     start_idx = spot_sequence[i]
-    #     end_idx = spot_sequence[i + 1]
-
-    #     # スポットの座標と高さを取得
-    #     start_coord = [coordsData[start_idx][0], coordsData[start_idx][1]]
-    #     end_coord = [coordsData[end_idx][0], coordsData[end_idx][1]]
-
-    #     # ルート座標を取得
-    #     route_coords = get_routeCoord(start_coord, end_coord)
-
-    #     # 各地点間の距離と角度を計算
-    #     distangle_data = get_distance_and_angles(route_coords)
-
-    #     # METsによる身体的疲労度を計算
-    #     mets_fatigue = calculate_METs(distangle_data)
-    #     mets_fatigue_total += mets_fatigue
-
-    #     # print(mets_fatigue_total)
     
 
     # 移動時間に関する制約(最小化)
