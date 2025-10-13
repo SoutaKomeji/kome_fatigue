@@ -214,17 +214,29 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
     for i in range(len(spot_sequence) - 1):
         start_idx = spot_sequence[i]
         end_idx = spot_sequence[i+1]
-        mets_fatigue += metsFatigueData[start_idx][end_idx]
+
         
         # 休憩できる観光スポットを訪れた場合に，休憩時間に応じて直前の移動による疲労を軽減する
         # 詳細はimportant_information.txtの32行目以下を参照
+
+        # 回復分(%)を設定
+        recovery_rate = 0.00
 
         # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
         if spotData[i+1][6] < 0:
             # 制限時間によって直前の疲労を軽減する割合を変える
             if spotData[i+1][8] <= 15:
-                return 0
+                recovery_rate = (spotData[i+1][8] * 29 / 15) / 42
+            elif spotData[i+1][8] <= 30:
+                recovery_rate = (29 + (spotData[i+1][8] - 15) * 5 / 15) / 42
+            elif spotData[i+1][8] <= 60:
+                recovery_rate = (29 + 5 + (spotData[i+1][8] - 30) * 4 / 30) / 42
+            elif spotData[i+1][8] <= 90:
+                recovery_rate = (29 + 5 + 4 + (spotData[i+1][8] - 60) * 2 / 30) / 42
+            else:
+                recovery_rate = 1.00
 
+        mets_fatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
 
         # print(spot_sequence[i+1], spotData[i+1][6])
 
