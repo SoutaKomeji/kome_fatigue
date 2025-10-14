@@ -253,6 +253,7 @@ def mate(inds1, inds2, gen):
         end_idx = course2[j+1]
 
         recovery_rate = 0.00
+        
         if spotData[course2[j+1]][6] < 0:
             if spotData[course2[j+1]][8] <= 15:
                 recovery_rate = (spotData[course2[j+1]][8] * 29 / 15) / 42

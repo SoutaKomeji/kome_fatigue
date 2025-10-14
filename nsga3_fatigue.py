@@ -155,7 +155,7 @@ def makeMinMax(pop):
     print("maxList:",maxList)
     print("minList:",minList)
 
-def normalizedInd(ind): #ind=[[56, 17, 13, 10, 29, 46, 22, 56], 331, 116, 3](例)
+def normalizedInd(ind): #ind=[[56, 17, 13, 10, 29, 46, 22, 56], 331, 116,np.float(33333.333), 3](例)
     # 最大値と最小値から正規化
     # print("ind",ind)
     evaList = list(ind.fitness.values) #evaList = [自然，文化，身体的疲労，精神的疲労, 移動による身体的疲労]
@@ -169,6 +169,7 @@ def normalizedInd(ind): #ind=[[56, 17, 13, 10, 29, 46, 22, 56], 331, 116, 3](例
         elif(j==2 or j == 3 or j == 4):
             # print("pre_evaList[j]:",evaList[j])
             evaList[j] = 1 - ((evaList[j] - minList[j]) / (maxList[j] - minList[j]))
+
             # print("evaList[j]:",evaList[j])
             # 
 
@@ -464,7 +465,7 @@ def best_individuals_show_for_each_reference_point(individuals):
 #---------------------------------------------------------------------------------------------
 
 toolbox = base.Toolbox()
-toolbox.register("attr_float", makeRoute.singleCourseData, spotData, tTimeData, stepData, watchData, metsFatigueData, 4, 8) #
+toolbox.register("attr_float", makeRoute.singleCourseData, spotData, tTimeData, stepData, watchData, metsFatigueData, 4, 10) #
 toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.attr_float) #観光ルートを作る
 toolbox.register("population", tools.initRepeat, list, toolbox.individual) #初期観光ルート群を作る（MU個）
 # toolbox.register("evaluate", makeRoute.evaluate, spotData, tTimeData, stepData, watchData) #歩数あり

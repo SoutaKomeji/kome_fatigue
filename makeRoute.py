@@ -131,7 +131,7 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
 
             # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
             if spotData[j+1][6] < 0:
-                # print ("spotData[i+1]: ", spotData[i+1])
+                # print("spotData[j+1]: ", spotData[j+1])
                 # 制限時間によって直前の疲労を軽減する割合を変える
                 if spotData[j+1][8] <= 15:
                     recovery_rate = (spotData[j+1][8] * 29 / 15) / 42
@@ -144,7 +144,8 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
                 else:
                     recovery_rate = 1.00
             metsFatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
-
+        #     print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
+        # print("-------------------------------------------------------")
         if totaltime <= timeLimit + int(timeLimit/10) and totaltime >= timeLimit - (int(timeLimit/10)*2):
             route_flag = True
 
