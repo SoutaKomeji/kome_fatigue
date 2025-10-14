@@ -123,7 +123,27 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
             totaltime += tTimeData[route[j]][route[j+1]] + watchData[route[j]]
             walktime += int(tTimeData[route[j]][route[j+1]])
 
-            metsFatigue += metsFatigueData[route[j]][route[j+1]]
+            # 回復分(%)を設定
+            recovery_rate = 0.00
+
+            start_idx = route[j]
+            end_idx = route[j+1]
+
+            # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
+            if spotData[j+1][6] < 0:
+                # print ("spotData[i+1]: ", spotData[i+1])
+                # 制限時間によって直前の疲労を軽減する割合を変える
+                if spotData[j+1][8] <= 15:
+                    recovery_rate = (spotData[j+1][8] * 29 / 15) / 42
+                elif spotData[j+1][8] <= 30:
+                    recovery_rate = (29 + (spotData[j+1][8] - 15) * 5 / 15) / 42
+                elif spotData[j+1][8] <= 60:
+                    recovery_rate = (29 + 5 + (spotData[j+1][8] - 30) * 4 / 30) / 42
+                elif spotData[j+1][8] <= 90:
+                    recovery_rate = (29 + 5 + 4 + (spotData[j+1][8] - 60) * 2 / 30) / 42
+                else:
+                    recovery_rate = 1.00
+            metsFatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
 
         if totaltime <= timeLimit + int(timeLimit/10) and totaltime >= timeLimit - (int(timeLimit/10)*2):
             route_flag = True
@@ -201,8 +221,6 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
         if before_men_fatigue > 0 and spotData[j][7] < 0:
             men_rest_flag = True
     
-    phy_fatigue += ind[2]
-    
     # 出発地点と終着地点を省略
     totaltime = ind[1]
     walktime = ind[2]
@@ -225,6 +243,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
 
         # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
         if spotData[i+1][6] < 0:
+            # print ("spotData[i+1]: ", spotData[i+1])
             # 制限時間によって直前の疲労を軽減する割合を変える
             if spotData[i+1][8] <= 15:
                 recovery_rate = (spotData[i+1][8] * 29 / 15) / 42
@@ -236,8 +255,8 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
                 recovery_rate = (29 + 5 + 4 + (spotData[i+1][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
-
         mets_fatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
+
 
         # print(spot_sequence[i+1], spotData[i+1][6])
 

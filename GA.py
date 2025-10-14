@@ -25,7 +25,7 @@ start_time = time.time()
 
 #目的関数の数の設定
 # NOBJ = 9 #歩数あり
-NOBJ = 4
+NOBJ = 5
 
 K = 10
 NDIM = NOBJ + K - 1
@@ -35,7 +35,7 @@ P = 2
 H = factorial(NOBJ + P - 1) / (factorial(P) * factorial(NOBJ - 1))
 
 # 制限時間
-timeLimit = 60 * 4
+timeLimit = 60 * 5
 
 # 各評価値の最大，最小値を測定
 BOUND_LOW, BOUND_UP = [],[]
@@ -49,8 +49,8 @@ BOUND_LOW, BOUND_UP = [],[]
 # minList = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
 # 疲労，観光時間追加
-maxList = [1.0,1.0,1.0,1.0]
-minList = [0.0,0.0,0.0,0.0]
+maxList = [1.0,1.0,1.0,1.0,1.0]
+minList = [0.0,0.0,0.0,0.0,0.0]
 
 # Excelデータの読み込みを始める行番号を指定
 row = 26
@@ -208,7 +208,25 @@ def mate(inds1, inds2, gen):
         totaltime += tTimeData[course1[j]][course1[j+1]] + watchData[course1[j]]
         walktime += int(tTimeData[course1[j]][course1[j+1]])
         steps += int(stepData[course1[j]][course1[j+1]])
-        metsFatigue += metsFatigueData[course1[j]][course1[j+1]]
+
+        start_idx = course1[j]
+        end_idx = course1[j+1]
+
+        recovery_rate = 0.00
+
+        if spotData[course1[j+1]][6] < 0:
+            if spotData[course1[j+1]][8] <= 15:
+                recovery_rate = (spotData[course1[j+1]][8] * 29 / 15) / 42
+            elif spotData[course1[j+1]][8] <= 30:
+                recovery_rate = (29 + (spotData[course1[j+1]][8] - 15) * 5 / 15) / 42
+            elif spotData[course1[j+1]][8] <= 60:
+                recovery_rate = (29 + 5 + (spotData[course1[j+1]][8] - 30) * 4 / 30) / 42
+            elif spotData[course1[j+1]][8] <= 90:
+                recovery_rate = (29 + 5 + 4 + (spotData[course1[j+1]][8] - 60) * 2 / 30) / 42
+            else:
+                recovery_rate = 1.00
+
+        metsFatigue += metsFatigueData[start_idx][end_idx]*(1 - recovery_rate)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
         child1.append(totaltime[0])
@@ -230,7 +248,24 @@ def mate(inds1, inds2, gen):
         totaltime += tTimeData[course2[j]][course2[j+1]] + watchData[course2[j]]
         walktime += int(tTimeData[course2[j]][course2[j+1]])
         steps += stepData[course2[j]][course2[j+1]]
-        metsFatigue += metsFatigueData[course2[j]][course2[j+1]]
+
+        start_idx = course2[j]
+        end_idx = course2[j+1]
+
+        recovery_rate = 0.00
+        if spotData[course2[j+1]][6] < 0:
+            if spotData[course2[j+1]][8] <= 15:
+                recovery_rate = (spotData[course2[j+1]][8] * 29 / 15) / 42
+            elif spotData[course2[j+1]][8] <= 30:
+                recovery_rate = (29 + (spotData[course2[j+1]][8] - 15) * 5 / 15) / 42
+            elif spotData[course2[j+1]][8] <= 60:
+                recovery_rate = (29 + 5 + (spotData[course2[j+1]][8] - 30) * 4 / 30) / 42
+            elif spotData[course2[j+1]][8] <= 90:
+                recovery_rate = (29 + 5 + 4 + (spotData[course2[j+1]][8] - 60) * 2 / 30) / 42
+            else:
+                recovery_rate = 1.00
+
+        metsFatigue += metsFatigueData[course2[j]][course2[j+1]]*(1 - recovery_rate)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
         child2.append(totaltime[0])
@@ -289,7 +324,24 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
         walktime += int(tTimeData[ind[0][j]][ind[0][j+1]])
         steps += stepData[ind[0][j]][ind[0][j+1]]
 
-        metsFatigue += metsFatigueData[ind[0][j]][ind[0][j+1]]
+        start_idx = ind[0][j]
+        end_idx = ind[0][j+1]
+
+        recovery_rate = 0.00
+
+        if spotData[ind[0][j+1]][6] < 0:
+            if spotData[ind[0][j+1]][8] <= 15:
+                recovery_rate = (spotData[ind[0][j+1]][8] * 29 / 15) / 42
+            elif spotData[ind[0][j+1]][8] <= 30:
+                recovery_rate = (29 + (spotData[ind[0][j+1]][8] - 15) * 5 / 15) / 42
+            elif spotData[ind[0][j+1]][8] <= 60:
+                recovery_rate = (29 + 5 + (spotData[ind[0][j+1]][8] - 30) * 4 / 30) / 42
+            elif spotData[ind[0][j+1]][8] <= 90:
+                recovery_rate = (29 + 5 + 4 + (spotData[ind[0][j+1]][8] - 60) * 2 / 30) / 42
+            else:
+                recovery_rate = 1.00
+
+        metsFatigue += metsFatigueData[ind[0][j]][ind[0][j+1]]*(1 - recovery_rate)
     # print("steps : ",steps)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:

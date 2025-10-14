@@ -429,7 +429,6 @@ def best_individuals_show_for_each_reference_point(individuals):
             print("歴史観光スポット身体")
         elif i == 6:
             print("歴史移動身体")
-        
         elif i == 12:
             print("自然観光スポット身体")
         elif i == 10:
@@ -474,7 +473,8 @@ toolbox.register("mate", GA.mate)
 toolbox.register("mutate", GA.mutate)
 toolbox.register("normalized", normalizedInd)
 toolbox.register("select",tools.selNSGA3, ref_points=ref_points)
-# toolbox.register("select", tools.selNSGA3WithMemory(ref_points))
+# toolbox.register("select", tools
+# .selNSGA3WithMemory(ref_points))
 
 # ここで一番最初の親観光ルート群を作る
 parents = toolbox.population(n=MU) #初期観光ルート群 [[[出発地点, 観光地1, 観光地2, ..., 観光地n, 終着地点], トータルの観光時間, トータルの移動時間, 0],...
