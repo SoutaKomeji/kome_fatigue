@@ -122,6 +122,7 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
         for j in range(len(route) - 1):
             totaltime += tTimeData[route[j]][route[j+1]] + watchData[route[j]]
             walktime += int(tTimeData[route[j]][route[j+1]])
+
             metsFatigue += metsFatigueData[route[j]][route[j+1]]
 
         if totaltime <= timeLimit + int(timeLimit/10) and totaltime >= timeLimit - (int(timeLimit/10)*2):
@@ -163,7 +164,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
     before_phy_fatigue = 0
     before_men_fatigue = 0
 
-    timeLimit = 60 * 4
+    timeLimit = 60 * 5
 
     nature = 0
     culture = 0
