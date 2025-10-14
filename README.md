@@ -17,3 +17,16 @@ pip install pandas
 pip install deap
 pip install openpyxl
 ```
+
+# 実行方法
+```
+python nsga3_fatigue.py
+```
+実行後，世代数を聞かれるので，任意の世代数をターミナルで入力するとGAが実行されます
+
+```
+python spot_name_list_steps.py
+```
+これは提案されたルート番号（例：56, 21, 2, 41, 20, 45, 56）をターミナルに入力すると，
+観光スポット名と，そのスポットの特徴量や滞在時間などがわかります
+
