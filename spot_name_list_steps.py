@@ -19,7 +19,7 @@ start_time = time.time()
 
 # Problem definition
 # PROBLEM = "dtlz2"
-NOBJ = 8
+NOBJ = 5
 # K = 10
 # NDIM = NOBJ + K - 1
 P = 2

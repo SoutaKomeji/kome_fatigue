@@ -226,7 +226,7 @@ def mate(inds1, inds2, gen):
             else:
                 recovery_rate = 1.00
 
-        metsFatigue += metsFatigueData[start_idx][end_idx]*(1 - recovery_rate)
+        metsFatigue += float(metsFatigueData[start_idx][end_idx]*(1 - recovery_rate))
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
         child1.append(totaltime[0])
@@ -253,7 +253,7 @@ def mate(inds1, inds2, gen):
         end_idx = course2[j+1]
 
         recovery_rate = 0.00
-        
+
         if spotData[course2[j+1]][6] < 0:
             if spotData[course2[j+1]][8] <= 15:
                 recovery_rate = (spotData[course2[j+1]][8] * 29 / 15) / 42
@@ -266,7 +266,7 @@ def mate(inds1, inds2, gen):
             else:
                 recovery_rate = 1.00
 
-        metsFatigue += metsFatigueData[course2[j]][course2[j+1]]*(1 - recovery_rate)
+        metsFatigue += float(metsFatigueData[course2[j]][course2[j+1]]*(1 - recovery_rate))
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
         child2.append(totaltime[0])
@@ -342,7 +342,7 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
             else:
                 recovery_rate = 1.00
 
-        metsFatigue += metsFatigueData[ind[0][j]][ind[0][j+1]]*(1 - recovery_rate)
+        metsFatigue += float(metsFatigueData[ind[0][j]][ind[0][j+1]]*(1 - recovery_rate))
     # print("steps : ",steps)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:

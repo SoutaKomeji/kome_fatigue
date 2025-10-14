@@ -145,9 +145,9 @@ minList = [0.0,0.0,0.0,0.0,0.0]
 
 def makeMinMax(pop):
     # 最大値，最小値の測定
-    for i in range(len(pop)): # 最初の個体を最大値と最小値に設定するため「-1」する
+    for i in range(len(pop)):
         for j in range(len(maxList)):
-            if(maxList[j] < pop[i].fitness.values[j]):
+            if(maxList[j] < pop[i].fitness.values[j] and maxList[j] > 0):
                 maxList[j] = pop[i].fitness.values[j]
             if(minList[j] > pop[i].fitness.values[j]):
                 minList[j] = pop[i].fitness.values[j]
@@ -448,6 +448,8 @@ def best_individuals_show_for_each_reference_point(individuals):
             
         if(associations_number > -1):
             # print("associations_number",associations_number)
+            print("associations_number",associations_number)
+            print("ref_data_to_show[i]",ref_data_to_show[i])
             print("最良個体",ref_data_to_show[i].associations[associations_number])
             inds_value = toolbox.evaluate(ref_data_to_show[i].associations[associations_number])
             print("評価値（正規化済）",ref_data_to_show[i].associations[associations_number].fitness.values)

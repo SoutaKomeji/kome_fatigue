@@ -31,7 +31,7 @@ P = 2
 H = factorial(NOBJ + P - 1) / (factorial(P) * factorial(NOBJ - 1))
 
 # 制限時間
-timeLimit = 60 * 4
+timeLimit = 60 * 5
 
 # 各評価値の最大，最小値を測定
 BOUND_LOW, BOUND_UP = [],[]
@@ -143,7 +143,7 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
                     recovery_rate = (29 + 5 + 4 + (spotData[j+1][8] - 60) * 2 / 30) / 42
                 else:
                     recovery_rate = 1.00
-            metsFatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
+            metsFatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
         #     print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
         # print("-------------------------------------------------------")
         if totaltime <= timeLimit + int(timeLimit/10) and totaltime >= timeLimit - (int(timeLimit/10)*2):
@@ -204,6 +204,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
 
     ind = toolbox.clone(inds)
 
+    # print("ind:[0][1:-1]",ind[0][1:-1])
     for j in ind[0][1:-1]:
         nature += spotData[j][0] * spotData[j][8] #自然
         culture += spotData[j][2] * spotData[j][8] #文化
@@ -230,7 +231,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
 
     # METs * 距離に基づく身体的疲労度の計算及び追加
     spot_sequence = ind[0]
-
+    # print("spot_sequence:",spot_sequence)
     for i in range(len(spot_sequence) - 1):
         start_idx = spot_sequence[i]
         end_idx = spot_sequence[i+1]
@@ -256,8 +257,11 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
                 recovery_rate = (29 + 5 + 4 + (spotData[i+1][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
-        mets_fatigue += metsFatigueData[start_idx][end_idx] * (1 - recovery_rate)
-
+        # print("start_idx:",start_idx)
+        # print("end_idx:",end_idx)
+        # print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
+        mets_fatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
+        # print("mets_fatigue:",mets_fatigue)
 
         # print(spot_sequence[i+1], spotData[i+1][6])
 
