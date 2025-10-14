@@ -10,12 +10,9 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-# Install必要なライブラリ
+# パッケージのインストール方法
 ```
-pip install numpy
-pip install pandas
-pip install deap
-pip install openpyxl
+pip install -r requirements.txt
 ```
 
 # 実行方法
@@ -29,4 +26,3 @@ python spot_name_list_steps.py
 ```
 これは提案されたルート番号（例：56, 21, 2, 41, 20, 45, 56）をターミナルに入力すると，
 観光スポット名と，そのスポットの特徴量や滞在時間などがわかります
-
