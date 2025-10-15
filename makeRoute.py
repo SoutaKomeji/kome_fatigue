@@ -129,18 +129,18 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
             start_idx = route[j]
             end_idx = route[j+1]
 
-            # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
-            if spotData[j+1][6] < 0:
-                # print("spotData[j+1]: ", spotData[j+1])
+            # end_idxが休憩できるスポットであるかどうかを確認
+            if spotData[end_idx][6] < 0:
+                # print("spotData[end_idx]: ", spotData[end_idx])
                 # 制限時間によって直前の疲労を軽減する割合を変える
-                if spotData[j+1][8] <= 15:
-                    recovery_rate = (spotData[j+1][8] * 29 / 15) / 42
-                elif spotData[j+1][8] <= 30:
-                    recovery_rate = (29 + (spotData[j+1][8] - 15) * 5 / 15) / 42
-                elif spotData[j+1][8] <= 60:
-                    recovery_rate = (29 + 5 + (spotData[j+1][8] - 30) * 4 / 30) / 42
-                elif spotData[j+1][8] <= 90:
-                    recovery_rate = (29 + 5 + 4 + (spotData[j+1][8] - 60) * 2 / 30) / 42
+                if spotData[end_idx][8] <= 15:
+                    recovery_rate = (spotData[end_idx][8] * 29 / 15) / 42
+                elif spotData[end_idx][8] <= 30:
+                    recovery_rate = (29 + (spotData[end_idx][8] - 15) * 5 / 15) / 42
+                elif spotData[end_idx][8] <= 60:
+                    recovery_rate = (29 + 5 + (spotData[end_idx][8] - 30) * 4 / 30) / 42
+                elif spotData[end_idx][8] <= 90:
+                    recovery_rate = (29 + 5 + 4 + (spotData[end_idx][8] - 60) * 2 / 30) / 42
                 else:
                     recovery_rate = 1.00
             metsFatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
@@ -232,33 +232,29 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
     # METs * 距離に基づく身体的疲労度の計算及び追加
     spot_sequence = ind[0]
     # print("spot_sequence:",spot_sequence)
-    for i in range(len(spot_sequence) - 1):
-        start_idx = spot_sequence[i]
-        end_idx = spot_sequence[i+1]
+    for i, (start_idx, end_idx) in enumerate(zip(spot_sequence[:-1], spot_sequence[1:])):
+        # print("start_idx:",start_idx,",end_idx:",end_idx)
 
-        
         # 休憩できる観光スポットを訪れた場合に，休憩時間に応じて直前の移動による疲労を軽減する
         # 詳細はimportant_information.txtの32行目以下を参照
 
         # 回復分(%)を設定
         recovery_rate = 0.00
 
-        # spot_sequence[i+1]が休憩できるスポットであるかどうかを確認
-        if spotData[i+1][6] < 0:
-            # print ("spotData[i+1]: ", spotData[i+1])
-            # 制限時間によって直前の疲労を軽減する割合を変える
-            if spotData[i+1][8] <= 15:
-                recovery_rate = (spotData[i+1][8] * 29 / 15) / 42
-            elif spotData[i+1][8] <= 30:
-                recovery_rate = (29 + (spotData[i+1][8] - 15) * 5 / 15) / 42
-            elif spotData[i+1][8] <= 60:
-                recovery_rate = (29 + 5 + (spotData[i+1][8] - 30) * 4 / 30) / 42
-            elif spotData[i+1][8] <= 90:
-                recovery_rate = (29 + 5 + 4 + (spotData[i+1][8] - 60) * 2 / 30) / 42
+        # end_idxが休憩できるスポットであるかどうかを確認
+        if spotData[end_idx][6] < 0:
+            # print("spotData[",end_idx,"][6]:", spotData[end_idx][6])
+            # print("spotData[",end_idx,"][8]:", spotData[end_idx][8])
+            if spotData[end_idx][8] <= 15:
+                recovery_rate = (spotData[end_idx][8] * 29 / 15) / 42
+            elif spotData[end_idx][8] <= 30:
+                recovery_rate = (29 + (spotData[end_idx][8] - 15) * 5 / 15) / 42
+            elif spotData[end_idx][8] <= 60:
+                recovery_rate = (29 + 5 + (spotData[end_idx][8] - 30) * 4 / 30) / 42
+            elif spotData[end_idx][8] <= 90:
+                recovery_rate = (29 + 5 + 4 + (spotData[end_idx][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
-        # print("start_idx:",start_idx)
-        # print("end_idx:",end_idx)
         # print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
         mets_fatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
         # print("mets_fatigue:",mets_fatigue)

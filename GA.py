@@ -195,6 +195,8 @@ def mate(inds1, inds2, gen):
 
     child1.append(course1)
     child2.append(course2)
+    # print("course1:", course1)
+    # print("course2:", course2)
 
     #　トータルの観光時間と移動のみの時間，制限時間との差分を算出する
     totaltime = 0
@@ -215,6 +217,9 @@ def mate(inds1, inds2, gen):
         recovery_rate = 0.00
 
         if spotData[course1[j+1]][6] < 0:
+            # print("course1", course1)
+            # print("spotData[",course1[j+1],"][6]:", spotData[course1[j+1]][6])
+            # print("spotData[",course1[j+1],"][8]:", spotData[course1[j+1]][8])
             if spotData[course1[j+1]][8] <= 15:
                 recovery_rate = (spotData[course1[j+1]][8] * 29 / 15) / 42
             elif spotData[course1[j+1]][8] <= 30:
@@ -225,8 +230,10 @@ def mate(inds1, inds2, gen):
                 recovery_rate = (29 + 5 + 4 + (spotData[course1[j+1]][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
-
+        # print("start_idx:", start_idx, "end_idx:", end_idx, "recovery_rate:", recovery_rate)
+        # print("metsFatigueData[",start_idx,"][",end_idx,"]:", metsFatigueData[start_idx][end_idx])  
         metsFatigue += float(metsFatigueData[start_idx][end_idx]*(1 - recovery_rate))
+        # print("metsFatigue:", metsFatigue)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
         child1.append(totaltime[0])
@@ -288,6 +295,10 @@ def mate(inds1, inds2, gen):
 # 突然変異
 def mutate(ind,gen): # [[61, 43, 42, 20] 560
 
+    ind = copy.deepcopy(ind)
+
+    ind_mutate = []
+
     loot = 0
     if(len(ind[0]) > 3):
         loot = random.randint(0,1)  
@@ -327,10 +338,13 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
 
         start_idx = ind[0][j]
         end_idx = ind[0][j+1]
+        # print("start_idx:", start_idx, "end_idx:", end_idx)
 
         recovery_rate = 0.00
 
         if spotData[ind[0][j+1]][6] < 0:
+            # print("spotData[",ind[0][j+1],"][6]:", spotData[ind[0][j+1]][6])
+            # print("spotData[",ind[0][j+1],"][8]:", spotData[ind[0][j+1]][8])
             if spotData[ind[0][j+1]][8] <= 15:
                 recovery_rate = (spotData[ind[0][j+1]][8] * 29 / 15) / 42
             elif spotData[ind[0][j+1]][8] <= 30:
@@ -341,8 +355,10 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
                 recovery_rate = (29 + 5 + 4 + (spotData[ind[0][j+1]][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
-
+        
         metsFatigue += float(metsFatigueData[ind[0][j]][ind[0][j+1]]*(1 - recovery_rate))
+        # print("metsFatigueData[",start_idx,"][",end_idx,"]:", metsFatigueData[start_idx][end_idx])
+        # print("metsFatigue:", metsFatigue)
     # print("steps : ",steps)
 
     if totaltime[0] < timeLimit + int(timeLimit/10) and totaltime[0] > timeLimit - (int(timeLimit/10))*2:
@@ -350,10 +366,14 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
         ind[2] = walktime
         ind[3] = metsFatigue
         ind[4] = gen + 1
-        return ind
+
+        ind_mutate = copy.deepcopy(ind)
+
+        return type(ind)(ind_mutate)
     else:
         ind = [[0],0,0,0,0]
-        return ind
+        ind_mutate = copy.deepcopy(ind)
+        return type(ind)(ind_mutate)
 
     # ind[1] = totaltime[0]
     # ind[2] = walktime
