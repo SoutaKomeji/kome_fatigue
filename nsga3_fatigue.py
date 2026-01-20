@@ -470,11 +470,11 @@ def best_individuals_show_for_each_reference_point(individuals):
 #---------------------------------------------------------------------------------------------
 
 toolbox = base.Toolbox()
-toolbox.register("attr_float", makeRoute.singleCourseData, spotData, tTimeData, stepData, watchData, metsFatigueData, 4, 10) #
+toolbox.register("attr_float", makeRoute.singleCourseData, spotData, tTimeData, stepData, watchData, metsFatigueData, spotFeatureData, 4, 10) #
 toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.attr_float) #観光ルートを作る
 toolbox.register("population", tools.initRepeat, list, toolbox.individual) #初期観光ルート群を作る（MU個）
 # toolbox.register("evaluate", makeRoute.evaluate, spotData, tTimeData, stepData, watchData) #歩数あり
-toolbox.register("evaluate", makeRoute.evaluate, spotData, tTimeData, stepData, watchData, coordsData, heightData, metsFatigueData) # METsによる身体的疲労度を追加バージョン
+toolbox.register("evaluate", makeRoute.evaluate, spotData, tTimeData, stepData, watchData, coordsData, heightData, metsFatigueData, spotFeatureData) # METsによる身体的疲労度を追加バージョン
 toolbox.register("mate", GA.mate)
 toolbox.register("mutate", GA.mutate)
 toolbox.register("normalized", normalizedInd)

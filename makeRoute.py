@@ -95,7 +95,7 @@ ind_ratio = [0,0,0]
 
 # 観光コース内のコースを回る順番を作成
 # singleCourseDataでは初期解（１回目の観光ルート）を作成する
-def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, minSpotNum, maxSpotNum):
+def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, spotFeatureData, minSpotNum, maxSpotNum):
 
     # 生成された観光ルートが制限時間を超えている場合は再生成する
     route_flag = False
@@ -146,6 +146,13 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
                     recovery_rate = (29 + 5 + 4 + (spotData[end_idx][8] - 60) * 2 / 30) / 42
                 else:
                     recovery_rate = 1.00
+
+            # # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+            # elif spotFeatureData[end_idx][0] == 1:
+            #     # 現状は10分間休憩と固定する．
+            #     recovery_rate = 0.28
+
+
             metsFatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
         #     print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
         # print("-------------------------------------------------------")
@@ -171,7 +178,7 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
 # コース評価用の関数
 # ここでは5段階評価しているものだけを扱う
 
-def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, metsFatigueData, inds):#参照しているのは単独の個体
+def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, metsFatigueData, spotFeatureData, inds):#参照しているのは単独の個体
 
     '''
     indに入っているもの
