@@ -234,6 +234,12 @@ def mate(inds1, inds2, gen):
                 recovery_rate = (29 + 5 + 4 + (spotData[course1[j+1]][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
+        
+        # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+        elif spotFeatureData[end_idx][0] == 1:
+            # 現状は5分間休憩と固定する．
+            recovery_rate = 0.28
+
         # print("start_idx:", start_idx, "end_idx:", end_idx, "recovery_rate:", recovery_rate)
         # print("metsFatigueData[",start_idx,"][",end_idx,"]:", metsFatigueData[start_idx][end_idx])  
         metsFatigue += float(metsFatigueData[start_idx][end_idx]*(1 - recovery_rate))
@@ -276,6 +282,11 @@ def mate(inds1, inds2, gen):
                 recovery_rate = (29 + 5 + 4 + (spotData[course2[j+1]][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
+        
+        # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+        elif spotFeatureData[end_idx][0] == 1:
+            # 現状は5分間休憩と固定する．
+            recovery_rate = 0.28
 
         metsFatigue += float(metsFatigueData[course2[j]][course2[j+1]]*(1 - recovery_rate))
 
@@ -358,7 +369,12 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
             elif spotData[ind[0][j+1]][8] <= 90:
                 recovery_rate = (29 + 5 + 4 + (spotData[ind[0][j+1]][8] - 60) * 2 / 30) / 42
             else:
-                recovery_rate = 1.00
+                recovery_rate = 1.0
+
+        # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+        elif spotFeatureData[end_idx][0] == 1:
+            # 現状は5分間休憩と固定する．
+            recovery_rate = 0.28
         
         metsFatigue += float(metsFatigueData[ind[0][j]][ind[0][j+1]]*(1 - recovery_rate))
         # print("metsFatigueData[",start_idx,"][",end_idx,"]:", metsFatigueData[start_idx][end_idx])

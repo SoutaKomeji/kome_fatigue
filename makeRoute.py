@@ -147,10 +147,10 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
                 else:
                     recovery_rate = 1.00
 
-            # # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
-            # elif spotFeatureData[end_idx][0] == 1:
-            #     # 現状は10分間休憩と固定する．
-            #     recovery_rate = 0.28
+            # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+            elif spotFeatureData[end_idx][0] == 1:
+                # 現状は5分間休憩と固定する．
+                recovery_rate = 0.28
 
 
             metsFatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
@@ -265,6 +265,12 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
                 recovery_rate = (29 + 5 + 4 + (spotData[end_idx][8] - 60) * 2 / 30) / 42
             else:
                 recovery_rate = 1.00
+
+        # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
+        elif spotFeatureData[end_idx][0] == 1:
+            # 現状は5分間休憩と固定する．
+            recovery_rate = 0.28
+
         # print("metsFatigueData[start_idx][end_idx]:",metsFatigueData[start_idx][end_idx])
         mets_fatigue += float(metsFatigueData[start_idx][end_idx] * (1 - recovery_rate))
         # print("mets_fatigue:",mets_fatigue)
