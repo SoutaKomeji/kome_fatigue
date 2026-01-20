@@ -101,6 +101,7 @@ watchData = []
 coordsData = []
 heightData = []
 metsFatigueData = []
+spotFeatureData = []
 
 SPOT_NUM = 56
 
@@ -112,6 +113,7 @@ watchTimeSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポッ�
 coordsSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='座標取得')
 heightSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='高さの取得')
 metsFatigueSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='METsを用いた移動による疲労')
+spotFeatureSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='観光スポットの特徴')
 
 for i in range(SPOT_NUM + 1):
     spotData.append(featureSheet.iloc[i+25,1:10].values)
@@ -121,6 +123,7 @@ for i in range(SPOT_NUM + 1):
     coordsData.append(coordsSheet.iloc[i,1:3].values)
     heightData.append(heightSheet.iloc[i,1:2].values)
     metsFatigueData.append(metsFatigueSheet.iloc[i,1:SPOT_NUM + 2].values)
+    spotFeatureData.append(spotFeatureSheet.iloc[i,1:2].values)
 
 # print("spotData:", spotData)
 ## 観光スポットのデータ作成終了

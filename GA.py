@@ -93,6 +93,8 @@ tTimeData = []
 stepData = []
 watchData = []
 metsFatigueData = []
+spotFeatureData = []
+
 
 SPOT_NUM = 56
 
@@ -102,6 +104,7 @@ tTimeSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポット�
 stepSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポット間移動歩数')
 watchTimeSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='スポットでの観光時間')
 metsFatigueSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='METsを用いた移動による疲労')
+spotFeatureSheet = pd.read_excel('preExpData_fatigue.xlsx', sheet_name='観光スポットの特徴')
 
 for i in range(SPOT_NUM + 1):
     spotData.append(featureSheet.iloc[i+25,1:10].values)
@@ -109,6 +112,7 @@ for i in range(SPOT_NUM + 1):
     stepData.append(stepSheet.iloc[i,2:SPOT_NUM + 3].values)
     watchData.append(watchTimeSheet.iloc[i+25,4:5].values)
     metsFatigueData.append(metsFatigueSheet.iloc[i,1:SPOT_NUM + 2].values)
+    spotFeatureData.append(spotFeatureSheet.iloc[i,1:2].values)
 
 
 # 目的関数のweight(自然，文化，身体的疲労，精神的疲労，観光時間，移動時間)=(1.0,1.0,-1.0,-1.0,-1.0,-1.0)
