@@ -149,6 +149,7 @@ def singleCourseData(spotData, tTimeData, stepData, watchData, metsFatigueData, 
 
             # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
             elif spotFeatureData[end_idx][0] == 1:
+                totaltime += 5  # 休憩時間を追加
                 # 現状は5分間休憩と固定する．
                 recovery_rate = 0.28
 
@@ -268,6 +269,7 @@ def evaluate(spotData, tTimeData, stepData, watchData, coordsData, heightData, m
 
         # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
         elif spotFeatureData[end_idx][0] == 1:
+            totaltime += 5  # 休憩時間を追加
             # 現状は5分間休憩と固定する．
             recovery_rate = 0.28
 

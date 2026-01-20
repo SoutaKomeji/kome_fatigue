@@ -237,6 +237,7 @@ def mate(inds1, inds2, gen):
         
         # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
         elif spotFeatureData[end_idx][0] == 1:
+            totaltime += 5  # 休憩時間を追加
             # 現状は5分間休憩と固定する．
             recovery_rate = 0.28
 
@@ -285,6 +286,7 @@ def mate(inds1, inds2, gen):
         
         # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
         elif spotFeatureData[end_idx][0] == 1:
+            totaltime += 5  # 休憩時間を追加
             # 現状は5分間休憩と固定する．
             recovery_rate = 0.28
 
@@ -373,6 +375,7 @@ def mutate(ind,gen): # [[61, 43, 42, 20] 560
 
         # end_idxが休憩スポットではないが，ベンチなどが設置されている場合
         elif spotFeatureData[end_idx][0] == 1:
+            totaltime += 5  # 休憩時間を追加
             # 現状は5分間休憩と固定する．
             recovery_rate = 0.28
         
